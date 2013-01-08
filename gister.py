@@ -41,13 +41,10 @@ else:
 
     # get history last line
     command = os.popen('tail -n 1 %s' % history_file).read()
-    print command
     # zsh timestamp looks like : 2348907234:0;
     command = re.sub(': \d+:\d+;', '', command)
-    print command
     # remove the gister pipe at the end
     command = '|'.join(command.split('|')[0:-1])
-    print command
 
     payload = '%s %s\n%s' % (prompt, command, ''.join(stdin_lines))
 
@@ -65,4 +62,4 @@ u = g.get_user()
 
 f = InputFileContent(payload)
 files = {'': f}
-u.create_gist(not args.secret, files, 'test thing')
+u.create_gist(not args.secret, files, 'created by github.com/tr3buchet/gister')
