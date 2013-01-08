@@ -64,9 +64,9 @@ def get_stdin():
 
 
 def get_vim_payload():
-    filename = 'asdf'
-    text = 'some more!'
-    return (filename, text)
+    lines = get_stdin()
+    filename = lines.pop(0)
+    return (filename, ''.join(lines))
 
 
 def get_commandline_payload(prompt, history_file):

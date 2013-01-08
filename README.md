@@ -34,6 +34,30 @@ i prefer to store my oauth tokens in [keyring](http://pypi.python.org/pypi/keyri
 ### github oauth tokens
 here is a [gist](http://gist.github.com/4482201) of the process by which a token is acquired. the returned dict will have a *token* key in it denoting your token. you can also manage your tokens by managing your github account and selecting *Applications*.
 
+### using with vim
+I added the following to [my .vimrc](http://github.com/tr3buchet/conf/.vimrc) to interact with gister:
+    " ------- gist making! --------------------------------
+    fun Gister(...)
+      let gister_call = "gister -v"
+      for flag in a:000
+        let gister_call = gister_call . " " . flag
+      endfor
+      let result = system(gister_call, expand("%:t") . "\n" . getreg("\""))
+      echo result
+    endfun
+    " public gist on github from selection or single line
+    vnoremap <F9> y:call Gister()<cr>
+    nnoremap <F9> yy:call Gister()<cr>
 
-TODO:
-* add support for vim
+    " secret gist on github from selection or single line
+    vnoremap <F10> y:call Gister("-s")<cr>
+    nnoremap <F10> yy:call Gister("-s")<cr>
+
+    " public gist on private github from selection or single line
+    vnoremap <F11> y:call Gister("-p")<cr>
+    nnoremap <F11> yy:call Gister("-p")<cr>
+
+    " secret gist on private github from selection or single line
+    vnoremap <F12> y:call Gister("-p", "-s")<cr>
+    nnoremap <F12> yy:call Gister("-p", "-s")<cr>
+    " ------- end pastie.org ---------------------------
