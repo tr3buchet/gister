@@ -27,7 +27,7 @@ setup(
     author_email='trey@treymorris.com',
     description='gist making script',
     long_description=read('README.md'),
-    install_requires=['argparse', 'keyring', 'PyGithub'],
+    install_requires=['argparse', 'keyring', 'requests'],
     packages=find_packages(),
     url='https://github.com/tr3buchet/gister',
     entry_points={

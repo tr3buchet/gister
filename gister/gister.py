@@ -16,23 +16,26 @@
 #
 import argparse
 import ConfigParser
+import json
 import keyring
 import os
 import re
+import requests
 import sys
 
-import github
+
+GITHUB_API = 'https://api.github.com'
 
 
 def parse_arguments():
-    arg_parser = argparse.ArgumentParser(description='make gists')
-    arg_parser.add_argument('-p', '--private', action='store_true',
-                            help='put gist on configured enterprise github')
-    arg_parser.add_argument('-s', '--secret', action='store_true',
-                            help='gist will be secret (not public)')
-    arg_parser.add_argument('-v', '--vim', action='store_true',
-                            help='gist came from vim, no prompt/history')
-    return arg_parser.parse_args()
+    parser = argparse.ArgumentParser(description='make gists!')
+    parser.add_argument('-p', '--private', action='store_true',
+                        help='put gist on configured enterprise github')
+    parser.add_argument('-s', '--secret', action='store_true',
+                        help='gist will be secret (not public)')
+    parser.add_argument('-v', '--vim', action='store_true',
+                        help='gist came from vim, no prompt/history')
+    return parser.parse_args()
 
 
 def get_stdin():
@@ -74,18 +77,19 @@ def create_gist():
     if args.vim:
         payload = get_vim_payload()
     else:
-        payload = get_commandline_payload()
+        payload = get_commandline_payload(config_parser)
 
     if args.private:
         url = config_parser.get('gister', 'private_github_url')
         token = keyring.get_password('pgithub', 'token')
-        g = github.Github(token, base_url=url)
     else:
+        url = GITHUB_API
         token = keyring.get_password('github', 'token')
-        g = github.Github(token)
 
-    u = g.get_user()
-
-    files = {payload[0]: github.InputFileContent(payload[1])}
-    u.create_gist(not args.secret, files,
-                  'created by github.com/tr3buchet/gister')
+    headers = {'Authorization': 'token %s' % token}
+    payload = {'description': 'created by github.com/tr3buchet/gister',
+               'public': not args.secret,
+               'files': {payload[0]: {'content': payload[1]}}}
+    r = requests.post(url + '/gists', data=json.dumps(payload),
+                      headers=headers)
+    print json.loads(r.text)['html_url']
