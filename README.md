@@ -36,6 +36,7 @@ here is a [gist](http://gist.github.com/4482201) of the process by which a token
 
 ### using with vim
 I added the following to [my .vimrc](http://github.com/tr3buchet/conf/.vimrc) to interact with gister:
+
     " ------- gist making! --------------------------------
     fun Gister(...)
       let gister_call = "gister -v"
