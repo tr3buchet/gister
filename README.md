@@ -31,6 +31,9 @@ an example configuration file `.gister` is given for you to use. it will be look
 ### keyring
 i prefer to store my oauth tokens in [keyring](http://pypi.python.org/pypi/keyring) because it's safer than storing it plain text in the .gister file. your python keyring needs to have a section for *github* with a key *token* containing a github oauth token linked to your account. if you use the private github, do the same for *pgithub* and *token*. i added mine like this: [gist](https://gist.github.com/4481060).
 
+### github oauth tokens
+here is a [gist](http://gist.github.com/4482201) of the process by which a token is acquired. the returned dict will have a *token* key in it denoting your token. you can also manage your tokens by managing your github account and selecting *Applications*.
+
 
 TODO:
 * add support for vim
