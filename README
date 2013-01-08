@@ -1,0 +1,31 @@
+this is a script to post things on gister for me from
+the command line in an easy way.
+
+Example:
+cat dog | gister
+
+this will attempt to create a gist that looks like this:
+[prompt here]% cat dog
+<contents of cat here>
+
+There are a few things to configure.
+First take a look at the .gister file. I suggest copying
+it to home directory.
+
+There are 3 configurable things here:
+prompt. my preference given, don't have to use all keys,
+but can't add new keys. if this is missing there will be
+no prompt in the gist.
+history_file. necessary for finding the command you've just
+run. if this is missing, there will be no last command in
+the gist.
+private_github_url. if you plan on using the -p, --private
+flags to point gister a private github deployment, set the
+url here
+
+otherwise all you need are two keyring values:
+github token
+pgithub token (if you use the private github deployment)
+
+
+TODO: add support for vim
