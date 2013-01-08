@@ -43,8 +43,8 @@ def parse_config():
             defaults={'prompt': '[%(username)s|%(hostname)s %(cwd)s]%%',
                       'history_file': '~/.zhistory',
                       'private_github_url': None})
-    configs = config_parser.read(['.gister', os.path.expanduser('~/.gister')])
-    if configs:
+    config = config_parser.read(os.path.expanduser('~/.gister'))
+    if config:
         prompt = config_parser.get('gister', 'prompt', raw=True)
         history_file = config_parser.get('gister', 'history_file')
         url = config_parser.get('gister', 'private_github_url')

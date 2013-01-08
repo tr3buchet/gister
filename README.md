@@ -11,7 +11,7 @@
 `cat dog | gister -ps`
 
 ### usage
-    gister.py [-h] [-p] [-s] [-v]
+    gister [-h] [-p] [-s] [-v]
 
     make gists!
 
@@ -22,7 +22,7 @@
       -v, --vim      gist came from vim, no prompt/history
 
 ### config file - .gister
-an example configuration file `.gister` is given for you to use. it will be looked for in `~/.gister` and your current working directory. it supports three values:
+an example configuration file `.gister` is given for you to use. it will be looked for in `~/.gister`. it supports three values:
 
 * prompt - configure your own prompt (using at most user/host/cwd)
 * history_file - location of shell history file for command display
@@ -34,4 +34,3 @@ i prefer to store my oauth tokens in [keyring](http://pypi.python.org/pypi/keyri
 
 TODO:
 * add support for vim
-* make this a binary
