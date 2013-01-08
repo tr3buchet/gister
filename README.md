@@ -27,7 +27,7 @@ for now clone the repo and `sudo python setup.py install`
 ### config file - .gister
 an example configuration file `.gister` is given for you to use. it will be looked for in `~/.gister`. it supports three values:
 
-* prompt - configure your own prompt (using at most user/host/cwd)
+* prompt - configure your own prompt (using variables username/hostname/cwd)
 * history_file - location of shell history file for command display
 * private\_github\_url - if you plan on using `-p/--private` this url needs to be set to the location of your private github deployment
 
