@@ -81,7 +81,7 @@ def get_commandline_payload(prompt, history_file):
 
     # get history last line
     command = os.popen('tail -n 1 %s 2>/dev/null' % history_file).read()
-    # zsh timestamp looks like : 2348907234:0;
+    # zsh prefix looks like : 2348907234:0;
     command = re.sub(': \d+:\d+;', '', command)
     # remove the gister pipe at the end
     command = '|'.join(command.split('|')[0:-1])
