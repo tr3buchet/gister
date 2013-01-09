@@ -41,7 +41,7 @@ def parse_arguments():
 def parse_config():
     config_parser = ConfigParser.SafeConfigParser(
             defaults={'prompt': '[%(username)s|%(hostname)s %(cwd)s]%%',
-                      'history_file': '~/.zhistory',
+                      'history_file': '~/.bash_history',
                       'private_github_url': None})
     config = config_parser.read(os.path.expanduser('~/.gister'))
     if config:
@@ -70,11 +70,14 @@ def get_vim_payload():
 
 
 def get_commandline_payload(prompt, history_file):
-    username = os.environ['LOGNAME']
-    hostname = os.uname()[1]
-    cwd = re.sub('/home/%s' % username, '~', os.getcwd())
-    prompt = prompt % {'username': username,
-                       'hostname': hostname, 'cwd': cwd}
+    try:
+        username = os.environ['LOGNAME']
+        hostname = os.uname()[1]
+        cwd = re.sub('/home/%s' % username, '~', os.getcwd())
+        prompt = prompt % {'username': username,
+                           'hostname': hostname, 'cwd': cwd}
+    except:
+        prompt = ''
 
     # get history last line
     command = os.popen('tail -n 1 %s 2>/dev/null' % history_file).read()
@@ -82,8 +85,10 @@ def get_commandline_payload(prompt, history_file):
     command = re.sub(': \d+:\d+;', '', command)
     # remove the gister pipe at the end
     command = '|'.join(command.split('|')[0:-1])
-
-    prompt_command = '%s %s\n' % (prompt, command)
+    if command and prompt:
+        prompt_command = '%s %s\n' % (prompt, command)
+    else:
+        prompt_command = ''
 
     return ('', '%s%s' % (prompt_command, ''.join(get_stdin())))
 
