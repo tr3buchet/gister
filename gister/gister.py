@@ -33,6 +33,8 @@ def parse_arguments():
                         help='put gist on configured enterprise github')
     parser.add_argument('-s', '--secret', action='store_true',
                         help='gist will be secret (not public)')
+    parser.add_argument('-a', '--anonymous', action='store_true',
+                        help='gist will be anonymous')
     parser.add_argument('-v', '--vim', action='store_true',
                         help='gist came from vim, no prompt/history')
     return parser.parse_args()
@@ -93,6 +95,11 @@ def get_commandline_payload(prompt, history_file):
     return ('', '%s%s' % (prompt_command, ''.join(get_stdin())))
 
 
+def get_headers(token_name):
+    token = keyring.get_password(token_name, 'token')
+    return {'Authorization': 'token %s' % token}
+
+
 def create_gist():
     args = parse_arguments()
     prompt, history_file, private_github_url = parse_config()
@@ -108,15 +115,15 @@ def create_gist():
                    'see http://github.com/tr3buchet/gister for details')
             raise Exception(msg)
         url = private_github_url
-        token = keyring.get_password('pgithub', 'token')
+        token_name = 'pgithub'
     else:
         url = GITHUB_API
-        token = keyring.get_password('github', 'token')
+        token_name = 'github'
 
-    headers = {'Authorization': 'token %s' % token}
+    headers = get_headers(token_name) if not args.anonymous else None
     payload = {'description': 'created by github.com/tr3buchet/gister',
                'public': not args.secret,
                'files': {payload[0]: {'content': payload[1]}}}
     r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
-    print json.loads(r.text)['html_url']
+    print r.json()['html_url']

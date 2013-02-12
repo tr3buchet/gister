@@ -9,17 +9,26 @@
 `cat dog | gister -p`
 * post a secret gist on private github deployment:
 `cat dog | gister -ps`
+* post an anonymous gist on public github
+`cat dog | gister -a
+* post an anonymous and secret gist on public github
+` cat dog | gister -as
+* post an anonymous gist on private github deployment
+`cat dog | gister -ap
+* post an anonymous and secret gist on private github deployment
+` cat dog | gister -aps
 
 ### usage
-    gister [-h] [-p] [-s] [-v]
+    gister [-h] [-p] [-s] [-a] [-v]
 
     make gists!
 
     optional arguments:
-      -h, --help     show this help message and exit
-      -p, --private  put gist on configured enterprise github
-      -s, --secret   gist will be secret (not public)
-      -v, --vim      gist came from vim, no prompt/history
+      -h, --help       show this help message and exit
+      -p, --private    put gist on configured enterprise github
+      -s, --secret     gist will be secret (not public)
+      -a, --anonymous  gist will be anonymous
+      -v, --vim        gist came from vim, no prompt/history
 
 ### install
 for now clone the repo and `sudo python setup.py install`
