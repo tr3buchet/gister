@@ -10,13 +10,13 @@
 * post a secret gist on private github deployment:
 `cat dog | gister -ps`
 * post an anonymous gist on public github
-`cat dog | gister -a
+`cat dog | gister -a`
 * post an anonymous and secret gist on public github
-` cat dog | gister -as
+` cat dog | gister -as`
 * post an anonymous gist on private github deployment
-`cat dog | gister -ap
+`cat dog | gister -ap`
 * post an anonymous and secret gist on private github deployment
-` cat dog | gister -aps
+` cat dog | gister -aps`
 
 ### usage
     gister [-h] [-p] [-s] [-a] [-v]
