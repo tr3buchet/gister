@@ -23,6 +23,7 @@ def read(fname):
 
 setup(
     name='gister',
+    version='1.0.0',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
