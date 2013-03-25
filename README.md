@@ -31,7 +31,8 @@
       -v, --vim        gist came from vim, no prompt/history
 
 ### install
-for now clone the repo and `sudo python setup.py install`
+fix weird hgtools dependency issue: `pip install hgtools`
+clone the repo and `python setup.py install`
 
 ### config file - .gister
 an example configuration file `.gister` is given for you to use. it will be looked for in `~/.gister`. it supports three values:
