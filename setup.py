@@ -31,7 +31,7 @@ for old, new in replacements:
 
 setup(
     name='gister',
-    version='1.0.3',
+    version='1.0.4',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
@@ -39,7 +39,7 @@ setup(
     install_requires=['argparse', 'keyring', 'requests'],
     classifiers=['Development Status :: 5 - Stable',
                  'License :: OSI Approved :: Apache Software License'],
-    keywords='github gist',
+    keywords='github gist gists',
     packages=find_packages(),
     license='Apache Software License',
     url='https://github.com/tr3buchet/gister',
