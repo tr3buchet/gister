@@ -14,7 +14,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-import os
 from setuptools import setup, find_packages
 
 
@@ -24,8 +23,7 @@ setup(
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-#    long_description=open('README.rst').read(),
-    long_description=read('README.rst'),
+    long_description=open('README.rst').read(),
     install_requires=['argparse', 'keyring', 'requests'],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],
