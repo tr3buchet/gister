@@ -1,4 +1,4 @@
-## gister - make gists!
+## gister - make gists! Flüssigkeitshaushalt!
 
 ### examples
 * post a public gist on public github:
