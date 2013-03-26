@@ -32,7 +32,8 @@ examples
 
 usage
 =====
-.. code:: bash
+
+.. code:: console
 
     gister [-h] [-p] [-s] [-a] [-v]
 
