@@ -37,7 +37,7 @@ setup(
     description='gist making script',
     long_description=long_description,
     install_requires=['argparse', 'keyring', 'requests'],
-    classifiers=['Development Status :: 5 - Stable',
+    classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],
     keywords='github gist gists',
     packages=find_packages(),
