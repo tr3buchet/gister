@@ -17,25 +17,13 @@
 from setuptools import setup, find_packages
 
 
-readme = open('README.rst')
-long_description = readme.read()
-readme.close()
-
-
-# NOTE(jkoelker) PYPI why do you hate me?
-replacements = (('.. code:: console', '::'),
-                ('.. code:: vim', '::'))
-for old, new in replacements:
-    long_description = long_description.replace(old, new)
-
-
 setup(
     name='gister',
-    version='1.0.4',
+    version='1.0.8',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-    long_description=long_description,
+    long_description=open('README.rst').read(),
     install_requires=['argparse', 'keyring', 'requests'],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],

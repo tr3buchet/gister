@@ -6,28 +6,28 @@ gister - make gists!
 examples
 ========
 * post a public gist on public github:
-  :code:`cat dog | gister`
+  ``cat dog | gister``
 
 * post a secret gist on public github:
-  :code:`cat dog | gister -s`
+  ``cat dog | gister -s``
 
 * post a public gist on private github deployment:
-  :code:`cat dog | gister -p`
+  ``cat dog | gister -p``
 
 * post a secret gist on private github deployment:
-  :code:`cat dog | gister -ps`
+  ``cat dog | gister -ps``
 
 * post an anonymous gist on public github:
-  :code:`cat dog | gister -a`
+  ``cat dog | gister -a``
 
 * post an anonymous and secret gist on public github:
-  :code:`cat dog | gister -as`
+  ``cat dog | gister -as``
 
 * post an anonymous gist on private github deployment:
-  :code:`cat dog | gister -ap`
+  ``cat dog | gister -ap``
 
 * post an anonymous and secret gist on private github deployment:
-  :code:`cat dog | gister -aps`
+  ``cat dog | gister -aps``
 
 
 usage
@@ -49,19 +49,19 @@ usage
 
 install
 =======
-* fix weird hgtools dependency issue: :code:`pip install hgtools`
+* fix weird hgtools dependency issue: ``pip install hgtools``
 
-* clone the repo and :code:`python setup.py install`
+* clone the repo and ``python setup.py install``
 
 config file - .gister
 =====================
-an example configuration file :code:`.gister` is given for you to use.
-it will be looked for in :code:`~/.gister`. it supports three values:
+an example configuration file ``.gister`` is given for you to use.
+it will be looked for in ``~/.gister``. it supports three values:
 
 * prompt - configure your own prompt (using variables
   username/hostname/cwd)
 * history_file - location of shell history file for command display
-* private\_github\_url - if you plan on using :code:`-p/--private`
+* private_github_url - if you plan on using ``-p/--private``
   this url needs to be set to the location of your private github
   deployment
 
