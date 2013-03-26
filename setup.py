@@ -18,16 +18,13 @@ import os
 from setuptools import setup, find_packages
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
 setup(
     name='gister',
     version='1.0.1',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-    long_description=read('README.rst'),
+    long_description=open('README.rst').read(),
     install_requires=['argparse', 'keyring', 'requests'],
     packages=find_packages(),
     url='https://github.com/tr3buchet/gister',
