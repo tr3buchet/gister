@@ -14,8 +14,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-import os
 from setuptools import setup, find_packages
+
+
+readme = open('README.rst')
+long_description = readme.read()
+readme.close()
+
+
+# NOTE(jkoelker) PYPI why do you hate me?
+replacements = (('.. code:: console', '::'),
+                ('.. code:: vim', '::'))
+for old, new in replacements:
+    long_description = long_description.replace(old, new)
 
 
 setup(
@@ -24,9 +35,13 @@ setup(
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-    long_description=open('README.rst').read(),
+    long_description=long_description,
     install_requires=['argparse', 'keyring', 'requests'],
+    classifiers=['Development Status :: 5 - Stable',
+                 'License :: OSI Approved :: Apache Software License'],
+    keywords='github gist',
     packages=find_packages(),
+    license='Apache Software License',
     url='https://github.com/tr3buchet/gister',
     entry_points={
         'console_scripts': [
