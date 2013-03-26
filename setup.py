@@ -27,7 +27,7 @@ setup(
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     install_requires=['argparse', 'keyring', 'requests'],
     packages=find_packages(),
     url='https://github.com/tr3buchet/gister',
