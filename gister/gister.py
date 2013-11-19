@@ -126,4 +126,5 @@ def create_gist():
                'files': {payload[0]: {'content': payload[1]}}}
     r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
+    r.raise_for_status()
     print r.json()['html_url']
