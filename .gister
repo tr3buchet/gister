@@ -1,4 +1,3 @@
 [gister]
 prompt = [%(username)s|%(hostname)s %(cwd)s]%%
-history_file = ~/.bash_history
-private_github_url = https://github.your_url_here.com/api/v3
+#private_github_url = https://github.your_url_here.com/api/v3
