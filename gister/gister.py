@@ -60,7 +60,7 @@ def parse_config():
     config = {}
     for name, value in items:
         # add in tokens from keyring if necessary
-        if 'oauth'in name and value == 'KEYRING':
+        if 'oauth' in name and value == 'KEYRING':
             if keyring:
                 value = keyring.get_password('gister', name)
             else:
