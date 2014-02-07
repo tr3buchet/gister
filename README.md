@@ -40,8 +40,8 @@
 ### config file - .gister
 an example configuration file `.gister` is given for you to use. it will be looked for in `~/.gister`. it supports these values:
 
-* public\_oauth\_token - your public github oauth token (not necessary for anonymous gists)
-* private\_oauth\_token - your private github oauth token (if you plan on using private github) (not necessary for anonymous gists)
+* public\_oauth - your public github oauth token (not necessary for anonymous gists)
+* private\_oauth - your private github oauth token (if you plan on using private github) (not necessary for anonymous gists)
 * prompt - configure prompt that is displayed when using the `-c/--command` option
 * public\_github\_url - this defaults to the url for public github
 * private\_github\_url - if you plan on using `-p/--private` this url needs to be set to the location of your private github deployment

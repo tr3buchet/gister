@@ -1,3 +1,9 @@
+# example .gister file
+# modify these to sane values or remove/delete them or don't use a .gister file at
+# all if you wish. a minimal set of functionality works even without it
+
 [gister]
 prompt = [%(username)s|%(hostname)s %(cwd)s]%%
-#private_github_url = https://github.your_url_here.com/api/v3
+private_github_url = https://github.your_url_here.com/api/v3
+private_oauth = KEYRING
+public_oauth = KEYRING

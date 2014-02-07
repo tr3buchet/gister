@@ -59,13 +59,12 @@ config file - .gister
 an example configuration file ``.gister`` is given for you to use.
 it will be looked for in ``~/.gister``. it supports these values:
 
-* public_oauth_token - your public github oauth token (not necessary
+* public_oauth - your public github oauth token (not necessary
   for anonymous gists)
-* private_oauth_token - your private github oauth token (if you plan on
+* private_oauth - your private github oauth token (if you plan on
   using private github) (not necessary for anonymous gists)
 * prompt - configure prompt that is displayed when using the
   ``-c/--command`` option
-* history_file - location of shell history file for command display
 * public_github_url - this defaults to the url for public github
 * private_github_url - if you plan on using ``-p/--private``
   this url needs to be set to the location of your private github
