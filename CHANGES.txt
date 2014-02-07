@@ -5,3 +5,4 @@ v1.0.3, 2013.09.25 -- make PyPI read the rst correctly
 v1.0.4, 2013.09.25 -- keywords, classifiers, and little translate for the PyPI docs not supporting flavored code blocks
 v1.0.9, 2013.09.26 -- between 4 and 9 updates to documentations for PyPI and githubs
 v1.0.10, 2014.01.14 -- keyring is optional, no more history shenanigans, better exception handling
+v1.0.11, 2014.02.07 -- removed keyring as a dependency

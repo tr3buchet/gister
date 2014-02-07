@@ -52,9 +52,7 @@ usage
 
 install
 =======
-* clone the repo and ``python setup.py install``
-
-* and potentially, fix weird hgtools dependency issue beforehand: ``pip install hgtools``
+* ``pip install gister`` or clone the repo and ``python setup.py install``
 
 config file - .gister
 =====================

@@ -19,12 +19,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='gister',
-    version='1.0.10',
+    version='1.0.11',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
     long_description=open('README.rst').read(),
-    install_requires=['argparse', 'keyring', 'requests'],
+    install_requires=['argparse', 'requests'],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],
     keywords='github gist gists',
