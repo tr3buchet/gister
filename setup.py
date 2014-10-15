@@ -19,7 +19,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gister',
-    version='1.0.13',
+    version='1.0.14',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',

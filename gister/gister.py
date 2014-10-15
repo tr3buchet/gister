@@ -41,6 +41,8 @@ def parse_arguments():
                         help='command to prepend to gist')
     parser.add_argument('-v', '--vim', action='store_true',
                         help='gist came from vim, no prompt/history')
+    parser.add_argument('file', nargs='*', action='store',
+                        help='name of file(s) to gist')
     return parser.parse_args()
 
 
@@ -74,18 +76,32 @@ def get_stdin():
     stdin_lines = []
     for line in sys.stdin:
         stdin_lines.append(line)
-    return stdin_lines
+    return ''.join(stdin_lines)
+
+
+def get_filedata(filenames):
+    filedata = {}
+    for filename in filenames:
+        try:
+            with open(filename) as f:
+                filedata[filename.split('/')[-1]] = {'content': f.read()}
+        except IOError as e:
+            print e
+            sys.exit(1)
+    return filedata
 
 
 def get_vim_payload():
-    lines = get_stdin()
-    filename = lines.pop(0)
-    return (filename, ''.join(lines))
+    lines = [line for line in sys.stdin]
+    filename = lines.pop(0).rstrip()
+    return {filename: {'content': ''.join(lines)}}
 
 
-def get_commandline_payload(prompt=None, command=None):
+def get_commandline_payload(prompt=None, command=None, filenames=None):
+    if filenames:
+        return get_filedata(filenames)
     if not (prompt and command):
-        return ('', ''.join(get_stdin()))
+        return {'': {'content': get_stdin()}}
     try:
         username = os.environ['LOGNAME']
         hostname = os.uname()[1]
@@ -100,7 +116,7 @@ def get_commandline_payload(prompt=None, command=None):
     else:
         prompt_command = ''
 
-    return ('', '%s%s' % (prompt_command, ''.join(get_stdin())))
+    return {'': {'content': '%s%s' % (prompt_command, get_stdin())}}
 
 
 def get_headers(conf, token_name):
@@ -145,8 +161,8 @@ def create_gist():
     if args.vim:
         payload = get_vim_payload()
     else:
-        payload = get_commandline_payload(conf['prompt'], args.command)
-
+        payload = get_commandline_payload(conf['prompt'], args.command,
+                                          args.file)
     if args.private:
         url = private_gist_url(conf, args)
         token_name = 'private_oauth'
@@ -157,7 +173,9 @@ def create_gist():
     headers = get_headers(conf, token_name) if not args.anonymous else None
     payload = {'description': 'created by github.com/tr3buchet/gister',
                'public': not args.secret,
-               'files': {payload[0]: {'content': payload[1]}}}
+               'files': payload}
+#               'files': dict((k, {'content': v}) for k, v in payload)}
+#               'files': {payload[0]: {'content': payload[1]}}}
     r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
     r.raise_for_status()

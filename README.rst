@@ -32,14 +32,26 @@ examples
 * post a public gist on public github with a command:
   ``cat doge | tail -n4 | gister -c "cat doge | tail -n4"``
 
+* post a gist of a file on public github:
+  ``gister filename.txt``
+
+* post a secret gist of two files on public github:
+  ``gister -s lolcats doge.text``
+
+* post an anonymous gist of globbed files on public github:
+  ``gister -a *.txt *.py``
+
 usage
 =====
 
 .. code:: console
 
-    gister [-h] [-p] [-s] [-a] [-c COMMAND] [-v]
+    gister [-h] [-p] [-s] [-a] [-c COMMAND] [-v] [file [file ...]]
 
     make gists!
+
+    positional arguments:
+      file                  name of file(s) to gist
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -47,8 +59,8 @@ usage
       -s, --secret          gist will be secret (not public)
       -a, --anonymous       gist will be anonymous
       -c COMMAND, --command COMMAND
+                            command to prepend to gist
       -v, --vim             gist came from vim, no prompt/history
-
 
 install
 =======
