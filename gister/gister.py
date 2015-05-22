@@ -14,8 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+from __future__ import print_function
 import argparse
-import ConfigParser
 import json
 import os
 import re
@@ -27,7 +27,10 @@ try:
     import keyring
 except ImportError:
     keyring = None
-
+try:
+    import ConfigParser
+except:
+    import configparser as ConfigParser#python3
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='make gists!')
@@ -87,7 +90,7 @@ def get_filedata(filenames):
             with open(filename) as f:
                 filedata[filename.split('/')[-1]] = {'content': f.read()}
         except IOError as e:
-            print e
+            print(e)
             sys.exit(1)
     return filedata
 
@@ -184,7 +187,10 @@ def create_gist():
         r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
     except Exception as e:
-        print e
+        print(e)
         sys.exit()
     r.raise_for_status()
-    print r.json()['html_url']
+    print(r.json()['html_url'])
+
+if __name__ == '__main__':
+    create_gist()
