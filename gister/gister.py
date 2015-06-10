@@ -29,8 +29,8 @@ except ImportError:
     keyring = None
 try:
     import ConfigParser
-except:
-    import configparser as ConfigParser#python3
+except ImportError:
+    import configparser as ConfigParser
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='make gists!')
@@ -183,14 +183,8 @@ def create_gist():
                'files': payload}
 #               'files': dict((k, {'content': v}) for k, v in payload)}
 #               'files': {payload[0]: {'content': payload[1]}}}
-    try:
-        r = requests.post(url + '/gists', data=json.dumps(payload),
+
+    r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
-    except Exception as e:
-        print(e)
-        sys.exit()
     r.raise_for_status()
     print(r.json()['html_url'])
-
-if __name__ == '__main__':
-    create_gist()
