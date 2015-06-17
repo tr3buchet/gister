@@ -40,7 +40,7 @@ NOTE! all gists are now secret
     make gists!
 
     positional arguments:
-      file                  name of file(s) to gist
+      files                 name of file(s) to gist
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -51,7 +51,7 @@ NOTE! all gists are now secret
                             command to prepend to gist
       -v, --vim             gist came from vim, no prompt/history
       -d DESCRIPTION, --description DESCRIPTION
-                            description of the file
+                            description of the gist
 
 install
 =======

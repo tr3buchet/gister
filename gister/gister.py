@@ -45,12 +45,12 @@ def parse_arguments():
                         help='command to prepend to gist')
     parser.add_argument('-v', '--vim', action='store_true',
                         help='gist came from vim, no prompt/history')
-    parser.add_argument('file', nargs='*', action='store',
+    parser.add_argument('files', nargs='*', action='store',
                         help='name of file(s) to gist')
     parser.add_argument('-d', '--description', action='store',
                         default=('created by '
                                  'https://github.com/tr3buchet/gister'),
-                        help='description of the file')
+                        help='description of the gist')
     return parser.parse_args()
 
 
@@ -143,13 +143,13 @@ def private_gist_url(conf, anonymous):
 
 
 def create_gist(anonymous=False, command=None, description=None,
-                file=None, private=False, vim=False):
+                files=None, private=False, vim=False):
     conf = parse_config()
 
     if vim:
         payload = get_vim_payload()
     else:
-        payload = get_commandline_payload(conf.get('prompt'), command, file)
+        payload = get_commandline_payload(conf.get('prompt'), command, files)
     if private:
         url = private_gist_url(conf, anonymous)
         token = None if anonymous else conf.get('private_oauth')
@@ -173,4 +173,4 @@ def print_gist_url():
     args = parse_arguments()
 
     print(create_gist(args.anonymous, args.command, args.description,
-                      args.file, args.private, args.vim))
+                      args.files, args.private, args.vim))
