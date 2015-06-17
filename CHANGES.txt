@@ -10,3 +10,4 @@ v1.0.12, 2014.02.07 -- minor bugfix
 v1.0.13, 2014.02.07 -- readme and example .gister updates
 v1.0.14, 2014.10.14 -- gister now accepts files as positional arguments for gisting
 v1.0.15, 2014.10.14 -- gister now requires argparse on python < 2.7
+v1.0.17, 2015.06.17 -- gister always makes secret gists, falls back to anonymous, and is librarized
