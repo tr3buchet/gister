@@ -26,7 +26,7 @@ if sys.version_info < (2, 7):
 
 setup(
     name='gister',
-    version='1.0.16',
+    version='1.0.17',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
@@ -40,4 +40,4 @@ setup(
     url='https://github.com/tr3buchet/gister',
     entry_points={
         'console_scripts': [
-            'gister = gister.gister:create_gist']})
+            'gister = gister.gister:print_gist_url']})

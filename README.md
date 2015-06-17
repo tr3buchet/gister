@@ -1,32 +1,26 @@
 ## gister - make gists! Flüssigkeitshaushalt!
 
 ### examples
-* post a public gist on public github:
-`cat doge | gister`
 * post a secret gist on public github:
-`cat doge | gister -s`
-* post a public gist on private github deployment:
-`cat doge | gister -p`
+`cat doge | gister`
 * post a secret gist on private github deployment:
-`cat doge | gister -ps`
-* post an anonymous gist on public github:
+`cat doge | gister -p`
+* post a secret anonymous gist on public github:
 `cat doge | gister -a`
-* post an anonymous and secret gist on public github:
-` cat doge | gister -as`
-* post an anonymous gist on private github deployment:
+* post a secret anonymous gist on private github deployment:
 `cat doge | gister -ap`
-* post an anonymous and secret gist on private github deployment:
-` cat doge | gister -aps`
-* post a public gist on public github with a command:
+* post a secret gist on public github with a command:
 `cat doge | tail -n4 | gister -c "cat doge | tail -n4"`
-* post a gist of a file on public github:
+* post a secret gist of a file on public github:
 `gister filename.txt`
 * post a secret gist of two files on public github:
-`gister -s lolcats doge.text`
-* post an anonymous gist of globbed files on public github:
+`gister lolcats doge.text`
+* post a secret anonymous gist of globbed files on public github:
 `gister -a *.txt *.py`
 
 ### usage
+NOTE! all gists are now secret
+
     gister [-h] [-p] [-s] [-a] [-c COMMAND] [-v] [file [file ...]]
 
     make gists!
@@ -37,11 +31,13 @@
     optional arguments:
       -h, --help            show this help message and exit
       -p, --private         put gist on configured enterprise github
-      -s, --secret          gist will be secret (not public)
-      -a, --anonymous       gist will be anonymous
+      -a, --anonymous       gist will be anonymous even if you have oauth
+                            configured
       -c COMMAND, --command COMMAND
                             command to prepend to gist
       -v, --vim             gist came from vim, no prompt/history
+      -d DESCRIPTION, --description DESCRIPTION
+                            description of the file
 
 ### install
 `pip install gister` or clone the repo and `python setup.py install`
@@ -57,6 +53,8 @@ an example configuration file `.gister` is given for you to use. it will be look
 
 ### github oauth tokens
 gister can be used with no oauth tokens, but can only create anonymous gists by specifying the `-a` or `--anonymous` flags
+
+all gists will fall back to anonymous posting if you don't have oauth configured for the endpoint being used
 
 you can manage your github oauth tokens here by visiting [applications](https://github.com/settings/applications) in your account settings
 
@@ -86,19 +84,11 @@ I added the following to [my .vimrc](http://github.com/tr3buchet/conf/blob/maste
       let result = system(gister_call, expand("%:t") . "\n" . getreg("\""))
       echo result
     endfun
-    " public gist on github from selection or single line
+    " secret gist on public github from selection or single line
     vnoremap <F9> y:call Gister()<cr>
     nnoremap <F9> yy:call Gister()<cr>
 
-    " secret gist on github from selection or single line
-    vnoremap <F10> y:call Gister("-s")<cr>
-    nnoremap <F10> yy:call Gister("-s")<cr>
-
-    " public gist on private github from selection or single line
-    vnoremap <F11> y:call Gister("-p")<cr>
-    nnoremap <F11> yy:call Gister("-p")<cr>
-
     " secret gist on private github from selection or single line
-    vnoremap <F12> y:call Gister("-p", "-s")<cr>
-    nnoremap <F12> yy:call Gister("-p", "-s")<cr>
+    vnoremap <F10> y:call Gister("-p")<cr>
+    nnoremap <F10> yy:call Gister("-p")<cr>
     " ------- end pastie.org ---------------------------

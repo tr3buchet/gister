@@ -22,6 +22,7 @@ import re
 import requests
 import sys
 
+
 # keyring is optional
 try:
     import keyring
@@ -32,21 +33,24 @@ try:
 except ImportError:
     import configparser as ConfigParser
 
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description='make gists!')
     parser.add_argument('-p', '--private', action='store_true',
                         help='put gist on configured enterprise github')
-    parser.add_argument('-s', '--secret', action='store_true',
-                        help='gist will be secret (not public)')
     parser.add_argument('-a', '--anonymous', action='store_true',
-                        help='gist will be anonymous')
+                        help='gist will be anonymous '
+                             'even if you have oauth configured')
     parser.add_argument('-c', '--command', action='store',
                         help='command to prepend to gist')
     parser.add_argument('-v', '--vim', action='store_true',
                         help='gist came from vim, no prompt/history')
     parser.add_argument('file', nargs='*', action='store',
                         help='name of file(s) to gist')
-    parser.add_argument('-d', '--description', help='description of the file.')
+    parser.add_argument('-d', '--description', action='store',
+                        default=('created by '
+                                 'https://github.com/tr3buchet/gister'),
+                        help='description of the file')
     return parser.parse_args()
 
 
@@ -123,63 +127,38 @@ def get_commandline_payload(prompt=None, command=None, filenames=None):
     return {'': {'content': '%s%s' % (prompt_command, get_stdin())}}
 
 
-def get_headers(conf, token_name):
-    return {'Authorization': 'token %s' % conf[token_name]}
+def get_headers(token):
+    return {'Authorization': 'token %s' % token}
 
 
-def private_gist_url(conf, args):
-    if not conf['private_github_url']:
+def private_gist_url(conf, anonymous):
+    if not conf.get('private_github_url'):
         raise Exception('private_github_url must be set in ~/.gister '
                         'to create a gist on private github.\n'
                         'see https://github.com/tr3buchet/gister'
                         '#config-file---gister for more info on config '
                         'settings or create a gist on public github by '
                         'not specifying the -p flag')
-    if not args.anonymous and conf['private_oauth'] is None:
-        # non anonymous gists require oauth
-        raise Exception('private_oauth must be set in ~/.gister to create a gi'
-                        'st on private github associated with your account.\n'
-                        'see https://github.com/tr3buchet/gister'
-                        '#config-file---gister for more info on config '
-                        'settings or create an anonymous gist by '
-                        'specifying the -a flag')
-    return conf['private_github_url']
+    return conf.get('private_github_url')
 
 
-def public_gist_url(conf, args):
-    if not args.anonymous and conf['public_oauth'] is None:
-        # non anonymous gists require oauth
-        raise Exception('public_oauth must be set in ~/.gister to create a '
-                        'gist on public github associated with your account.\n'
-                        'see https://github.com/tr3buchet/gister'
-                        '#config-file---gister for more info on config '
-                        'settings or create an anonymous gist by '
-                        'specifying the -a flag')
-    return conf['public_github_url']
-
-
-def create_gist():
-    args = parse_arguments()
+def create_gist(anonymous=False, command=None, description=None,
+                file=None, private=False, vim=False):
     conf = parse_config()
 
-    if args.vim:
+    if vim:
         payload = get_vim_payload()
     else:
-        payload = get_commandline_payload(conf['prompt'], args.command,
-                                          args.file)
-    if args.private:
-        url = private_gist_url(conf, args)
-        token_name = 'private_oauth'
+        payload = get_commandline_payload(conf.get('prompt'), command, file)
+    if private:
+        url = private_gist_url(conf, anonymous)
+        token = None if anonymous else conf.get('private_oauth')
     else:
-        url = public_gist_url(conf, args)
-        token_name = 'public_oauth'
-    description = 'created by github.com/tr3buchet/gister'
-    if args.description:
-        description = args.description
-
-    headers = get_headers(conf, token_name) if not args.anonymous else None
+        url = conf.get('public_github_url')
+        token = None if anonymous else conf.get('public_oauth')
+    headers = get_headers(token) if token else None
     payload = {'description': description,
-               'public': not args.secret,
+               'public': False,
                'files': payload}
 #               'files': dict((k, {'content': v}) for k, v in payload)}
 #               'files': {payload[0]: {'content': payload[1]}}}
@@ -187,4 +166,11 @@ def create_gist():
     r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
     r.raise_for_status()
-    print(r.json()['html_url'])
+    return r.json()['html_url']
+
+
+def print_gist_url():
+    args = parse_arguments()
+
+    print(create_gist(args.anonymous, args.command, args.description,
+                      args.file, args.private, args.vim))
