@@ -56,6 +56,8 @@ NOTE! all gists are now secret
 install
 =======
 * ``pip install gister`` or clone the repo and ``python setup.py install``
+* if you get an ``InsecurePlatformWarning``, ``pip install requests[security]`` to solve it.
+  I had to install libffi-devel on my fedora 21 system to get pyOpenSSL rocking
 
 config file - .gister
 =====================
