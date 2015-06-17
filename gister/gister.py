@@ -14,8 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+from __future__ import print_function
 import argparse
-import ConfigParser
 import json
 import os
 import re
@@ -27,7 +27,10 @@ try:
     import keyring
 except ImportError:
     keyring = None
-
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='make gists!')
@@ -43,6 +46,7 @@ def parse_arguments():
                         help='gist came from vim, no prompt/history')
     parser.add_argument('file', nargs='*', action='store',
                         help='name of file(s) to gist')
+    parser.add_argument('-d', '--description', help='description of the file.')
     return parser.parse_args()
 
 
@@ -86,7 +90,7 @@ def get_filedata(filenames):
             with open(filename) as f:
                 filedata[filename.split('/')[-1]] = {'content': f.read()}
         except IOError as e:
-            print e
+            print(e)
             sys.exit(1)
     return filedata
 
@@ -169,14 +173,18 @@ def create_gist():
     else:
         url = public_gist_url(conf, args)
         token_name = 'public_oauth'
+    description = 'created by github.com/tr3buchet/gister'
+    if args.description:
+        description = args.description
 
     headers = get_headers(conf, token_name) if not args.anonymous else None
-    payload = {'description': 'created by github.com/tr3buchet/gister',
+    payload = {'description': description,
                'public': not args.secret,
                'files': payload}
 #               'files': dict((k, {'content': v}) for k, v in payload)}
 #               'files': {payload[0]: {'content': payload[1]}}}
+
     r = requests.post(url + '/gists', data=json.dumps(payload),
                       headers=headers)
     r.raise_for_status()
-    print r.json()['html_url']
+    print(r.json()['html_url'])
