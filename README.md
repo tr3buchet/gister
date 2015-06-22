@@ -30,12 +30,20 @@ gister -a ~/home/whatever/*
 # post an ipython notebook secret gist on public github and get an nbviewer link:
 gister ~/.ipython/notebooks/cool_notebook.ipynb
 gister ~/.ipython/notebooks/*
+
+# edit a gist
+gister file.txt
+* edit file.txt *
+gister -e o4j208j20fj20f3j file1.txt
+# add a new file
+gister -e o4j208j20fj20f3j file2.txt
 ```
 
 ### usage
 NOTE! all gists are now secret
 
-    gister [-h] [-p] [-s] [-a] [-c COMMAND] [-v] [file [file ...]]
+    usage: gister [-h] [-a] [-c COMMAND] [-d DESCRIPTION] [-e id/url] [-p] [-v]
+                  [files [files ...]]
 
     make gists!
 
@@ -44,14 +52,25 @@ NOTE! all gists are now secret
 
     optional arguments:
       -h, --help            show this help message and exit
-      -p, --private         put gist on configured enterprise github
       -a, --anonymous       gist will be anonymous even if you have oauth
                             configured
       -c COMMAND, --command COMMAND
                             command to prepend to gist
-      -v, --vim             gist came from vim, no prompt/history
       -d DESCRIPTION, --description DESCRIPTION
                             description of the gist
+      -e id/url, --edit id/url
+                            edit a gist identified by id or url
+      -p, --private         put gist on configured enterprise github
+      -v, --vim             gist came from vim, no prompt/history
+
+### usage - editing gists
+editing gists works as such:
+* any files gisted with the `-e` flag will be added to the gist unless a file already exists in the gist by that name, in which
+  case it will be overwritten with the current file's contents
+* piping to a gist (ex `echo wahoo | gister`) will always result in the output of the original command being stored in a file called
+  `gistfile1.txt`. if you edit the gist by piping something new to it, the previous gistfile1.txt will be overwritten
+* there is no way to delete certain files in a gist using gister
+* if gister is invoked using the `-e` flag and an nbviewer url is shown, `?flush_cache=true` will be appended to the url
 
 ### usage - ipython notebooks
 ipython notebooks are files with a `.ipynb` extension. if all files specified on the commandline have this extension, a link to the

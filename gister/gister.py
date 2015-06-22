@@ -36,21 +36,23 @@ except ImportError:
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='make gists!')
-    parser.add_argument('-p', '--private', action='store_true',
-                        help='put gist on configured enterprise github')
     parser.add_argument('-a', '--anonymous', action='store_true',
                         help='gist will be anonymous '
                              'even if you have oauth configured')
     parser.add_argument('-c', '--command', action='store',
                         help='command to prepend to gist')
-    parser.add_argument('-v', '--vim', action='store_true',
-                        help='gist came from vim, no prompt/history')
-    parser.add_argument('files', nargs='*', action='store',
-                        help='name of file(s) to gist')
     parser.add_argument('-d', '--description', action='store',
                         default=('created by '
                                  'https://github.com/tr3buchet/gister'),
                         help='description of the gist')
+    parser.add_argument('-e', '--edit', nargs=1, metavar='id/url',
+                        help='edit a gist identified by id or url')
+    parser.add_argument('-p', '--private', action='store_true',
+                        help='put gist on configured enterprise github')
+    parser.add_argument('-v', '--vim', action='store_true',
+                        help='gist came from vim, no prompt/history')
+    parser.add_argument('files', nargs='*', action='store',
+                        help='name of file(s) to gist')
     return parser.parse_args()
 
 
@@ -147,7 +149,7 @@ def private_gist_url(conf, anonymous):
 
 
 def create_gist(anonymous=False, command=None, description=None,
-                files=None, private=False, vim=False):
+                files=None, private=False, vim=False, edit=False):
     conf = parse_config()
 
     if vim:
@@ -162,17 +164,26 @@ def create_gist(anonymous=False, command=None, description=None,
         token = None if anonymous else conf.get('public_oauth')
     ipynb = payload.pop('ipynb', False)
     headers = get_headers(token) if token else None
-    payload = {'description': description,
-               'public': False,
-               'files': payload}
+    if edit:
+        payload = {'description': description,
+                   'files': payload}
+        edit = edit[0].split('/')[-1]
+        r = requests.patch(url + '/gists/%s' % edit, data=json.dumps(payload),
+                           headers=headers)
+    else:
+        payload = {'description': description,
+                   'public': False,
+                   'files': payload}
 
-    r = requests.post(url + '/gists', data=json.dumps(payload),
-                      headers=headers)
+        r = requests.post(url + '/gists', data=json.dumps(payload),
+                          headers=headers)
     r.raise_for_status()
     link = r.json()['html_url']
     if ipynb and not private:
-        link_id = link.split('/')[-1]
-        return '%s\nhttp://nbviewer.ipython.org/%s' % (link, link_id)
+        nbvlink = 'http://nbviewer.ipython.org/%s' % link.split('/')[-1]
+        if edit:
+            nbvlink = nbvlink + '?flush_cache=true'
+        return '%s\n%s' % (link, nbvlink)
     return link
 
 
@@ -180,4 +191,4 @@ def print_gist_url():
     args = parse_arguments()
 
     print(create_gist(args.anonymous, args.command, args.description,
-                      args.files, args.private, args.vim))
+                      args.files, args.private, args.vim, args.edit))
