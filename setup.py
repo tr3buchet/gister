@@ -26,15 +26,14 @@ if sys.version_info < (2, 7):
 
 setup(
     name='gister',
-    version='1.0.20',
+    version='1.0.21',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
-    long_description=open('README.rst').read(),
     install_requires=install_requires,
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],
-    keywords='github gist gists',
+    keywords=['github', 'gist', 'gists'],
     packages=find_packages(),
     license='Apache Software License',
     url='https://github.com/tr3buchet/gister',
