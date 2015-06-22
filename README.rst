@@ -5,33 +5,37 @@ gister - make gists!
 
 examples
 ========
-* post a secret gist on public github:
-  ``cat doge | gister``
 
-* post a secret gist on private github deployment:
-  ``cat doge | gister -p``
+.. code:: console
 
-* post a secret anonymous gist on public github:
-  ``cat doge | gister -a``
+    # post a secret gist on public github:
+    cat doge | gister
 
-* post a secret anonymous gist on private github deployment:
-  ``cat doge | gister -ap``
+    # post a secret gist on private github deployment:
+    cat doge | gister -p
 
-* post a secret gist on public github with a command:
-  ``cat doge | tail -n4 | gister -c "cat doge | tail -n4"``
+    # post a secret anonymous gist on public github:
+    cat doge | gister -a
 
-* post a secret gist of a file on public github:
-  ``gister filename.txt``
+    # post a secret anonymous gist on private github deployment:
+    cat doge | gister -ap
 
-* post a secret gist of two files on public github:
-  ``gister lolcats doge.text``
+    # post a secret gist on public github with a command:
+    cat doge | tail -n4 | gister -c "cat doge | tail -n4"
 
-* post a secret anonymous gist of globbed files on public github:
-  ``gister -a *.txt *.py``
+    # post a secret gist of a file on public github:
+    gister filename.txt
 
-* post an ipython notebook secret gist on public github and get an nbviewer link
-  ``gister ~/.ipython/notebooks/cool_notebook.ipynb``
-  ``gister ~/.ipython/notebooks/*``
+    # post a secret gist of two files on public github:
+    gister lolcats doge.text
+
+    # post a secret anonymous gist of globbed files on public github:
+    gister -a *.txt *.py
+    gister -a ~/home/whatever/*
+
+    # post an ipython notebook secret gist on public github and get an nbviewer link
+    gister ~/.ipython/notebooks/cool_notebook.ipynb
+    gister ~/.ipython/notebooks/*
 
 usage
 =====
