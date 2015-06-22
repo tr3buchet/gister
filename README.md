@@ -17,7 +17,7 @@
 `gister lolcats doge.text`
 * post a secret anonymous gist of globbed files on public github:
 `gister -a *.txt *.py`
-* post an ipython notebook secret gist on public github and get an [nbviewer](http://nbviewer.ipython.org) link
+* post an ipython notebook secret gist on public github and get an nbviewer link:
 `gister ~/.ipython/notebooks/cool_notebook.ipynb`
 `gister ~/.ipython/notebooks/*`
 
