@@ -29,6 +29,10 @@ examples
 * post a secret anonymous gist of globbed files on public github:
   ``gister -a *.txt *.py``
 
+* post an ipython notebook secret gist on public github and get an nbviewer link
+  ``gister ~/.ipython/notebooks/cool_notebook.ipynb``
+  ``gister ~/.ipython/notebooks/*``
+
 usage
 =====
 NOTE! all gists are now secret
@@ -52,6 +56,14 @@ NOTE! all gists are now secret
       -v, --vim             gist came from vim, no prompt/history
       -d DESCRIPTION, --description DESCRIPTION
                             description of the gist
+
+usage - ipython notebooks
+=========================
+ipython notebooks are files with a ``.ipynb`` extension. if all files specified on the commandline have this extension, a link to the
+`http://nbviewer.ipython.org <http://nbviewer.ipython.org>`__ url to display your gist will be generated as well. nbviewer does not
+store your gist's data permanently, but does cache it for ~10 minutes
+
+also note that an nbviewer url will not be generated with the ``-p/--private`` flag as it would be impossible for it to access the gist
 
 install
 =======
