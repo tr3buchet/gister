@@ -165,16 +165,15 @@ def create_gist(anonymous=False, command=None, description=None,
     ipynb = payload.pop('ipynb', False)
     headers = get_headers(token) if token else None
     if edit:
-        payload = {'description': description,
+        payload = {'description': description or '',
                    'files': payload}
         edit = edit[0].split('/')[-1]
         r = requests.patch(url + '/gists/%s' % edit, data=json.dumps(payload),
                            headers=headers)
     else:
-        payload = {'description': description,
+        payload = {'description': description or '',
                    'public': False,
                    'files': payload}
-
         r = requests.post(url + '/gists', data=json.dumps(payload),
                           headers=headers)
     r.raise_for_status()
