@@ -14,3 +14,4 @@ v1.0.17, 2015.06.17 -- gister always makes secret gists, falls back to anonymous
 v1.0.19, 2015.06.22 -- .ipynb files automatically show nbviewer.ipython.org links as well
 v1.0.20, 2015.06.22 -- ability to edit a gist!!
 v1.0.21, 2015.06.22 -- package format update
+v1.0.22, 2015.06.22 -- generating README.rst for stupid pypi with pandoc now so I don't have to write it

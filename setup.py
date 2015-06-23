@@ -26,10 +26,11 @@ if sys.version_info < (2, 7):
 
 setup(
     name='gister',
-    version='1.0.21',
+    version='1.0.22',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',
+    long_description=open('README.rst').read(),
     install_requires=install_requires,
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: Apache Software License'],
