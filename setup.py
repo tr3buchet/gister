@@ -26,7 +26,7 @@ if sys.version_info < (2, 7):
 
 setup(
     name='gister',
-    version='1.0.22',
+    version='1.0.23',
     author='Trey Morris',
     author_email='trey@treymorris.com',
     description='gist making script',

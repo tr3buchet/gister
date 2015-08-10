@@ -90,12 +90,8 @@ def get_stdin():
 
 
 def get_filedata(filenames):
-    filedata = {'ipynb': True}
+    filedata = {}
     for filename in filenames:
-        __, ext = os.path.splitext(filename)
-        if ext != '.ipynb':
-            # NOTE(trb3uchet): if ANY file isn't ipynb, do not nbviewer it up
-            filedata['ipynb'] = False
         try:
             with open(filename) as f:
                 filedata[filename.split('/')[-1]] = {'content': f.read()}
@@ -162,7 +158,6 @@ def create_gist(anonymous=False, command=None, description=None,
     else:
         url = conf.get('public_github_url')
         token = None if anonymous else conf.get('public_oauth')
-    ipynb = payload.pop('ipynb', False)
     headers = get_headers(token) if token else None
     if edit:
         payload = {'description': description or '',
@@ -178,11 +173,6 @@ def create_gist(anonymous=False, command=None, description=None,
                           headers=headers)
     r.raise_for_status()
     link = r.json()['html_url']
-    if ipynb and not private:
-        nbvlink = 'http://nbviewer.ipython.org/%s' % link.split('/')[-1]
-        if edit:
-            nbvlink = nbvlink + '?flush_cache=true'
-        return '%s\n%s' % (link, nbvlink)
     return link
 
 

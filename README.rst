@@ -31,7 +31,7 @@ examples
     gister -a *.txt *.py
     gister -a ~/home/whatever/*
 
-    # post an ipython notebook secret gist on public github and get an nbviewer link:
+    # post an ipython notebook secret gist on public github which is now formatted \o/:
     gister ~/.ipython/notebooks/cool_notebook.ipynb
     gister ~/.ipython/notebooks/*
 
