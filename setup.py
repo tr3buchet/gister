@@ -19,7 +19,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-install_requires = ['requests']
+install_requires = ['requests', 'python-magic']
 if sys.version_info < (2, 7):
     install_requires.append('argparse')
 

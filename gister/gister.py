@@ -16,7 +16,9 @@
 #
 from __future__ import print_function
 import argparse
+import base64
 import json
+import magic
 import os
 import re
 import requests
@@ -92,9 +94,18 @@ def get_stdin():
 def get_filedata(filenames):
     filedata = {}
     for filename in filenames:
+        mimetype = magic.from_file(filename, mime=True)
+        if mimetype[0:4] == 'text':
+            mode = 'r'
+            convert = lambda data: data
+        elif mimetype[0:5] == 'image':
+            mode = 'rb'
+            convert = lambda data: base64.b64encode(data)
         try:
-            with open(filename) as f:
-                filedata[filename.split('/')[-1]] = {'content': f.read()}
+            with open(filename, mode) as f:
+                filedata[filename.split('/')[-1]] = \
+                    {'content': convert(f.read()),
+                     'type': mimetype}
         except IOError as e:
             print(e)
             sys.exit(1)
@@ -169,7 +180,9 @@ def create_gist(anonymous=False, command=None, description=None,
         payload = {'description': description or '',
                    'public': False,
                    'files': payload}
-        r = requests.post(url + '/gists', data=json.dumps(payload),
+        #r = requests.post(url + '/gists', data=json.dumps(payload),
+        #r = requests.post(url + '/gists', data=payload,
+        r = requests.post(url + '/gists', json=payload,
                           headers=headers)
     r.raise_for_status()
     link = r.json()['html_url']
